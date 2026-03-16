@@ -1,0 +1,487 @@
+/* Общий каркас приложения */
+.app-shell {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  background: transparent;
+}
+
+.app-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 20;
+  padding: 14px 18px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(10px);
+  border-radius: 0 0 16px 16px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.logo {
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 18px;
+  color: var(--light-text);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.logo::before {
+  content: '💘';
+}
+
+.page {
+  padding: 72px 16px 80px;
+  box-sizing: border-box;
+  max-width: 480px;
+  width: 100%;
+  margin: 0 auto;
+  text-align: left;
+  animation: page-fade-in 0.4s ease-out;
+}
+
+.name-text-header{
+  padding-top: 10px;
+}
+
+.name-hero-icon {
+  margin: 0 auto;
+}
+
+.page h1 {
+  font-size: 28px;
+  margin: 8px 0 12px;
+}
+
+.page p {
+  margin-bottom: 12px;
+}
+
+/* Домашняя страница */
+.home-page {
+  position: relative;
+}
+
+.hero-card {
+  margin-top: 8px;
+  padding: 18px 16px 20px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.4);
+  color: var(--text-h);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.hero-card h1 {
+  font-size: 26px;
+  margin: 4px 0 6px;
+}
+
+.hero-card p {
+  margin: 0;
+  opacity: 0.95;
+}
+
+.hero-icon-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.hero-heart {
+  width: 42px;
+  height: 42px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at 30% 0%, #ffe6f3, #ff4b8b);
+  color: #fff;
+  box-shadow: 0 12px 24px rgba(179, 41, 96, 0.5);
+  font-size: 22px;
+}
+
+.hero-cupid {
+  font-size: 30px;
+  color: #ff7ab5;
+}
+
+.hero-cupid-img-wrap {
+  width: 72px;
+  height: 72px;
+  border-radius: 999px;
+  overflow: hidden;
+  box-shadow: 0 10px 24px rgba(179, 41, 96, 0.35);
+}
+
+.cupid-svg {
+  width: 100%;
+  height: 100%;
+}
+
+.home-nav {
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.home-card {
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.4);
+  border: 1px solid rgba(255, 182, 216, 0.85);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.home-card.secondary {
+  border-style: dashed;
+  background: rgba(255, 255, 255, 0.85);
+}
+
+.home-card a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  text-decoration: none;
+  color: var(--text-h);
+}
+
+.home-card-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #ff4b8b, #ff8fb3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 20px;
+}
+
+.home-card-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.home-card-text strong {
+  font-size: 15px;
+}
+
+.home-card-text small {
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+/* Форма теста по именам */
+.name-test-form {
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.name-test-form.fancy {
+  padding: 16px 14px 18px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.name-hero {
+  margin-top: 4px;
+  margin-bottom: 10px;
+}
+
+.name-hero h1 {
+  margin: 4px 0 4px;
+}
+
+.name-hero-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #ff4b8b, #ff8fb3);
+  color: #fff;
+}
+
+.name-test-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 14px;
+}
+
+/* Результат */
+.result-page {
+  position: relative;
+  overflow: hidden;
+}
+
+.hearts-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+.result-content {
+  position: relative;
+  padding: 14px 14px 18px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  animation: result-pop-in 0.45s ease-out;
+}
+
+.result-percent {
+  font-size: 28px;
+  margin-top: 12px;
+}
+
+.result-pair {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 10px;
+  font-weight: 500;
+}
+
+.result-name {
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.result-heart-separator {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #ff4d6d;
+}
+
+.result-heart-wrapper {
+  display: flex;
+  justify-content: center;
+  margin: 12px 0 8px;
+}
+
+.result-heart-svg {
+  position: relative;
+  width: 170px;
+  height: 155px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: result-heart-pulse 1.8s ease-in-out infinite;
+}
+
+.result-heart-img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  filter: drop-shadow(0 8px 18px rgba(255, 77, 109, 0.45));
+}
+
+.result-percent-number {
+  position: absolute;
+  color: #ffffff;
+  font-size: 30px;
+  font-weight: 800;
+  text-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.25),
+    0 0 6px rgba(255, 77, 109, 0.7);
+}
+
+.result-message {
+  margin-top: 12px;
+  text-align: center;
+  font-weight: 600;
+  padding: 4px 6px 0;
+}
+
+@keyframes result-heart-pulse {
+  0% {
+    transform: rotate(-45deg) scale(1);
+  }
+  50% {
+    transform: rotate(-45deg) scale(1.05);
+  }
+  100% {
+    transform: rotate(-45deg) scale(1);
+  }
+}
+
+.result-actions {
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.result-actions a,
+.result-actions button {
+  text-align: center;
+}
+
+.loading-cupid-wrap {
+  width: 90px;
+  height: 90px;
+  margin: 0 auto 12px;
+}
+
+.loading-page .loading-content {
+  animation: loading-fade-in 0.4s ease-out;
+}
+
+@keyframes page-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes result-pop-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes loading-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Нижняя навигация */
+.app-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.28);
+  background-image: linear-gradient(135deg, #ff4d6d, #ff8fa3);
+  color: var(--light-text);
+  box-shadow:
+    0 -10px 22px rgba(255, 77, 109, 0.32),
+    0 0 0 1px rgba(255, 255, 255, 0.18);
+}
+
+.bottom-nav {
+  display: flex;
+  justify-content: space-around;
+  padding: 10px 16px 12px;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.bottom-nav a {
+  text-decoration: none;
+  color: var(--light-text);
+  font-size: 13px;
+}
+
+/* Общий стиль уже есть, допилим именно date */
+input[type='date'] {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  padding-right: 36px; /* место под иконку календаря */
+  position: relative;
+  background-image: linear-gradient(135deg, #ff4d6d, #ff8fa3);
+  background-clip: padding-box;
+  color: #222;
+}
+
+/* Иконка календаря справа (поверх существующего стиля input) */
+input[type='date']::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  opacity: 0;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+/* Обёртка, чтобы показать свою иконку */
+/* Контейнер календаря поменьше */
+.date-input-wrapper {
+  position: relative;
+}
+
+.date-input-wrapper .rdp {
+  font-size: 12px;              /* календарь компактнее */
+  max-width: 260px;
+}
+
+/* Центровка и компактный вид */
+.date-input-wrapper .rdp-months {
+  justify-content: center;
+}
+
+.date-input-wrapper .rdp-table {
+  margin: 4px auto 6px;
+}
+
+/* Шапка: выбор месяца и года */
+.date-input-wrapper .rdp-caption {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+
+/* Селекты месяца и года в виде мобильных pills */
+.date-input-wrapper .rdp-caption select {
+  border-radius: 999px;
+  border: 1px solid rgba(255, 143, 163, 0.8);
+  padding: 3px 8px;
+  font-size: 12px;
+  background: rgba(255, 255, 255, 0.8);
+  color: #222;
+  outline: none;
+  box-shadow: 0 4px 10px rgba(255, 77, 109, 0.12);
+  transition:
+          border-color 0.2s ease,
+          box-shadow 0.2s ease,
+          transform 0.1s ease;
+}
+
+.date-input-wrapper .rdp-caption select:hover {
+  border-color: #ff4d6d;
+  box-shadow: 0 6px 14px rgba(255, 77, 109, 0.18);
+  transform: translateY(-1px);
+}
+
+.date-input-wrapper .rdp-caption select:focus-visible {
+  border-color: #ff4d6d;
+  box-shadow:
+          0 0 0 1px rgba(255, 255, 255, 0.7),
+          0 0 0 3px rgba(255, 77, 109, 0.35);
+}

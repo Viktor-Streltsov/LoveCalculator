@@ -1,0 +1,13 @@
+<svg width="140" height="120" viewBox="0 0 140 120" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="heartGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ff4d6d"/>
+      <stop offset="100%" stop-color="#ff8fa3"/>
+    </linearGradient>
+  </defs>
+  <path
+    d="M70 108s-6.5-4.4-13.8-9.9C41.2 85.7 24 72.5 24 52.5 24 36.5 36.4 24 52.2 24c7.4 0 14.5 3.2 19.3 8.7C76.3 27.2 83.4 24 90.8 24 106.6 24 119 36.5 119 52.5c0 20-17.2 33.2-32.2 45.6C76.5 103.6 70 108 70 108z"
+    fill="url(#heartGradient)"
+  />
+</svg>
+

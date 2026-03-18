@@ -1,5 +1,6 @@
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useCallback } from 'react'
+import { motion, useReducedMotion } from 'framer-motion'
 import Particles from 'react-tsparticles'
 import type { Engine } from '@tsparticles/engine'
 import { loadFull } from 'tsparticles'
@@ -12,6 +13,7 @@ const Result = () => {
   const navigate = useNavigate()
   const params = new URLSearchParams(location.search)
   const { t, tArray } = useI18n()
+  const reduceMotion = useReducedMotion()
 
   const rawValue = params.get('value')
   const a = params.get('a') || ''
@@ -57,7 +59,7 @@ const Result = () => {
 
   return (
     <main className="page result-page">
-      {percent !== null && !Number.isNaN(percent) && (
+      {percent !== null && !Number.isNaN(percent) && !reduceMotion && (
         <div className="hearts-layer">
           <Particles
               id="hearts"
@@ -119,11 +121,30 @@ const Result = () => {
                   alt={t("common.heartAlt")}
                   className="result-heart-img"
                 />
-                <span className="result-percent-number">{percent}%</span>
+                <motion.span
+                  className="result-percent-number"
+                  initial={reduceMotion ? false : { opacity: 0, scale: 0.92 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: reduceMotion ? 0 : 0.35, ease: 'easeOut' }}
+                >
+                  {percent}%
+                </motion.span>
               </div>
             </div>
 
-            <p className="result-message">{message}</p>
+            <motion.p
+              className="result-message"
+              key={message}
+              initial={reduceMotion ? false : { opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{
+                duration: reduceMotion ? 0 : 0.35,
+                ease: 'easeOut',
+                delay: 0.05,
+              }}
+            >
+              {message}
+            </motion.p>
           </>
         )}
 

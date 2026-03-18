@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { motion } from 'framer-motion'
+import { motion, useReducedMotion } from 'framer-motion'
 import Particles from 'react-tsparticles'
 import type { Engine } from '@tsparticles/engine'
 import { useCallback } from 'react'
@@ -12,6 +12,7 @@ const Loading = () => {
   const location = useLocation()
   const navigate = useNavigate()
   const { t } = useI18n()
+  const reduceMotion = useReducedMotion()
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -26,54 +27,72 @@ const Loading = () => {
 
   return (
     <main className="page loading-page">
-      <div className="hearts-layer">
-        <Particles
-          id="hearts-loading"
-          init={particlesInit as any}
-          options={{
-            fullScreen: { enable: false },
-            background: { color: { value: 'transparent' } },
-            particles: {
-              number: { value: 30, density: { enable: true, area: 800 } },
-              move: {
-                enable: true,
-                direction: 'top',
-                speed: 1.4,
-                outModes: { default: 'out' },
-              },
-              shape: {
-                type: 'char',
-                character: {
-                  value: ['❤', '♡'],
-                  font: 'Verdana',
-                  style: '',
-                  weight: '400',
+      {!reduceMotion && (
+        <div className="hearts-layer">
+          <Particles
+            id="hearts-loading"
+            init={particlesInit as any}
+            options={{
+              fullScreen: { enable: false },
+              background: { color: { value: 'transparent' } },
+              particles: {
+                number: { value: 30, density: { enable: true, area: 800 } },
+                move: {
+                  enable: true,
+                  direction: 'top',
+                  speed: 1.4,
+                  outModes: { default: 'out' },
+                },
+                shape: {
+                  type: 'char',
+                  character: {
+                    value: ['❤', '♡'],
+                    font: 'Verdana',
+                    style: '',
+                    weight: '400',
+                  },
+                },
+                size: { value: 16, random: { enable: true, minimumValue: 8 } },
+                opacity: {
+                  value: 0.9,
+                  random: { enable: true, minimumValue: 0.5 },
                 },
               },
-              size: { value: 16, random: { enable: true, minimumValue: 8 } },
-              opacity: {
-                value: 0.9,
-                random: { enable: true, minimumValue: 0.5 },
-              },
-            },
-          }}
-        />
-      </div>
+            }}
+          />
+        </div>
+      )}
 
       <div className="loading-content">
         <motion.div
+          className="loading-progress-track"
+          initial={reduceMotion ? false : { opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: reduceMotion ? 0 : 0.25 }}
+        >
+          <motion.div
+            className="loading-progress-bar"
+            initial={{ width: 0 }}
+            animate={{ width: '100%' }}
+            transition={{ duration: reduceMotion ? 0 : 2, ease: 'easeOut' }}
+          />
+        </motion.div>
+
+        <motion.div
           className="loading-cupid-wrap"
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: [20, 0, 10, 0], opacity: 1 }}
-          transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+          initial={reduceMotion ? { y: 0, opacity: 1 } : { y: 20, opacity: 0 }}
+          animate={reduceMotion ? { y: 0, opacity: 1 } : { y: [20, 0, 10, 0], opacity: 1 }}
+          transition={
+            reduceMotion ? { duration: 0 } : { duration: 2, repeat: Infinity, ease: 'easeInOut' }
+          }
         >
           <Cupid />
         </motion.div>
 
         <motion.div
-          initial={{ opacity: 0, y: 16 }}
+          initial={reduceMotion ? false : { opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: reduceMotion ? 0 : 0.5 }}
         >
           <h1>{t("loading.title")}</h1>
           <p>{t("loading.subtitle")}</p>

@@ -1,5 +1,6 @@
 import React from "react"
 import { BrowserRouter, Routes, Route, Link, useLocation, useNavigate } from "react-router-dom"
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion"
 import Home from './pages/Home'
 import NameTest from './pages/NameTest'
 import DateTest from './pages/DateTest'
@@ -50,6 +51,10 @@ function LanguageSwitcher() {
 
 function AppInner() {
   const { t } = useI18n()
+  const location = useLocation()
+  const reduceMotion = useReducedMotion()
+
+  const routeKey = `${location.pathname}${location.search}`
 
   return (
     <div className="app-shell">
@@ -60,15 +65,26 @@ function AppInner() {
         <LanguageSwitcher />
       </header>
 
-      <Routes>
-        <Route path="/intro" element={<Intro />} />
-        <Route path="/" element={<Home />} />
-        <Route path="/name" element={<NameTest />} />
-        <Route path="/date" element={<DateTest />} />
-        <Route path="/loading" element={<Loading />} />
-        <Route path="/result" element={<Result />} />
-        <Route path="/about" element={<About />} />
-      </Routes>
+      <AnimatePresence mode="wait" initial={false}>
+        <motion.div
+          key={routeKey}
+          className="app-route"
+          initial={reduceMotion ? false : { opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={reduceMotion ? { opacity: 1 } : { opacity: 0, y: -10 }}
+          transition={reduceMotion ? { duration: 0 } : { duration: 0.28, ease: "easeOut" }}
+        >
+          <Routes location={location}>
+            <Route path="/intro" element={<Intro />} />
+            <Route path="/" element={<Home />} />
+            <Route path="/name" element={<NameTest />} />
+            <Route path="/date" element={<DateTest />} />
+            <Route path="/loading" element={<Loading />} />
+            <Route path="/result" element={<Result />} />
+            <Route path="/about" element={<About />} />
+          </Routes>
+        </motion.div>
+      </AnimatePresence>
 
       <footer className="app-footer">
         <nav className="bottom-nav">

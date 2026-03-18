@@ -1,11 +1,12 @@
 import { Link } from 'react-router-dom'
-import { motion } from 'framer-motion'
+import { motion, useReducedMotion } from 'framer-motion'
 import { FaHeart, FaBirthdayCake } from 'react-icons/fa'
 import Cupid from '../components/Cupid'
 import { useI18n } from '../i18n/i18n'
 
 const Home = () => {
   const { t } = useI18n()
+  const reduceMotion = useReducedMotion()
 
   return (
     <main className="page home-page">
@@ -18,16 +19,18 @@ const Home = () => {
         <div className="hero-icon-wrap">
           <motion.div
             className="hero-heart"
-            animate={{ scale: [1, 1.08, 1] }}
-            transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
+            animate={reduceMotion ? { scale: 1 } : { scale: [1, 1.08, 1] }}
+            transition={
+              reduceMotion ? { duration: 0 } : { duration: 1.8, repeat: Infinity, ease: 'easeInOut' }
+            }
           >
             <FaHeart />
           </motion.div>
 
           <motion.div
             className="hero-cupid-img-wrap"
-            animate={{ y: [0, -10, 0] }}
-            transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+            animate={reduceMotion ? { y: 0 } : { y: [0, -10, 0] }}
+            transition={reduceMotion ? { duration: 0 } : { duration: 3, repeat: Infinity, ease: 'easeInOut' }}
           >
             <Cupid />
           </motion.div>
@@ -38,14 +41,17 @@ const Home = () => {
 
       <motion.nav
         className="home-nav"
-        initial="hidden"
+        initial={reduceMotion ? false : "hidden"}
         animate="visible"
         variants={{
           hidden: { opacity: 0, y: 12 },
           visible: {
             opacity: 1,
             y: 0,
-            transition: { staggerChildren: 0.08, delayChildren: 0.1 },
+            transition: {
+              staggerChildren: reduceMotion ? 0 : 0.08,
+              delayChildren: reduceMotion ? 0 : 0.1,
+            },
           },
         }}
       >

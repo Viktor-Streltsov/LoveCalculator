@@ -3,11 +3,13 @@ import { useNavigate } from 'react-router-dom'
 import { calcNameLovePercent } from '../utils/loveCalc'
 import { motion } from 'framer-motion'
 import { FaHeart } from 'react-icons/fa'
+import { useI18n } from '../i18n/i18n'
 
 const NameTest = () => {
   const [firstName, setFirstName] = useState('')
   const [secondName, setSecondName] = useState('')
   const navigate = useNavigate()
+  const { t } = useI18n()
 
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault()
@@ -37,8 +39,8 @@ const NameTest = () => {
           <FaHeart />
           <FaHeart />
         </motion.div>
-        <h1 className={"name-text-header"}>Тест по именам</h1>
-        <p>Введи ваши имена и посмотри, как сильно купидон за вас.</p>
+        <h1 className={"name-text-header"}>{t("nameTest.title")}</h1>
+        <p>{t("nameTest.subtitle")}</p>
       </motion.div>
 
       <motion.form
@@ -49,23 +51,23 @@ const NameTest = () => {
         transition={{ delay: 0.1, duration: 0.5 }}
       >
         <label>
-          Твое имя
+          {t("nameTest.youNameLabel")}
           <input
             type="text"
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
-            placeholder="Например, Анна"
+            placeholder={t("nameTest.youNamePlaceholder")}
             required
           />
         </label>
 
         <label>
-          Имя портнера
+          {t("nameTest.partnerNameLabel")}
           <input
             type="text"
             value={secondName}
             onChange={(e) => setSecondName(e.target.value)}
-            placeholder="Например, Иван"
+            placeholder={t("nameTest.partnerNamePlaceholder")}
             required
           />
         </label>
@@ -76,7 +78,7 @@ const NameTest = () => {
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.97 }}
         >
-          Проверить совместимость
+          {t("nameTest.submit")}
         </motion.button>
       </motion.form>
     </main>

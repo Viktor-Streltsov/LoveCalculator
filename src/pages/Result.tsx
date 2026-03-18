@@ -5,11 +5,13 @@ import type { Engine } from '@tsparticles/engine'
 import { loadFull } from 'tsparticles'
 import { FaHeart } from 'react-icons/fa'
 import heartSvg from '../assets/heart.svg'
+import { useI18n } from '../i18n/i18n'
 
 const Result = () => {
   const location = useLocation()
   const navigate = useNavigate()
   const params = new URLSearchParams(location.search)
+  const { t, tArray } = useI18n()
 
   const rawValue = params.get('value')
   const a = params.get('a') || ''
@@ -21,37 +23,25 @@ const Result = () => {
     if (Number.isNaN(value)) return ''
 
     if (value >= 85) {
-      const variants = [
-        'Сказочная совместимость — как в романтическом фильме 💫',
-        'Идеальная пара — берегите эту магию ✨',
-        'Ваши сердца бьются почти в унисон ❤️',
-      ]
+      const variants = tArray("result.message.veryHigh")
+      if (!variants.length) return ''
       return variants[value % variants.length]
     }
 
     if (value >= 70) {
-      const variants = [
-        'Отличная пара — чуть больше внимания друг к другу, и будет 100%',
-        'Сильная совместимость, главное — не забывать говорить о чувствах',
-        'Между вами явно есть chemistry, поддерживайте её',
-      ]
+      const variants = tArray("result.message.high")
+      if (!variants.length) return ''
       return variants[value % variants.length]
     }
 
     if (value >= 40) {
-      const variants = [
-        'Есть потенциал — всё зависит от искренности и заботы',
-        'Немного работы над отношениями — и результат удивит вас',
-        'Не идеал, но иногда самые крепкие истории рождаются из контрастов',
-      ]
+      const variants = tArray("result.message.mid")
+      if (!variants.length) return ''
       return variants[value % variants.length]
     }
 
-    const variants = [
-      'Сложные отношения — но даже звёзды иногда спорят между собой',
-      'Похоже, вы очень разные. Главное — честность к себе и друг другу',
-      'Низкая совместимость, но выбор всегда за сердцем, а не за цифрами',
-    ]
+    const variants = tArray("result.message.low")
+    if (!variants.length) return ''
     return variants[value % variants.length]
   }
 
@@ -108,10 +98,10 @@ const Result = () => {
       )}
 
       <div className="result-content">
-        <h1>Результат совместимости</h1>
+        <h1>{t("result.title")}</h1>
 
         {percent === null || Number.isNaN(percent) ? (
-          <p>Похоже, данные для расчёта не найдены. Попробуй пройти тест ещё раз.</p>
+          <p>{t("result.notFound")}</p>
         ) : (
           <>
             <div className="result-pair">
@@ -124,7 +114,11 @@ const Result = () => {
 
             <div className="result-heart-wrapper">
               <div className="result-heart-svg">
-                <img src={heartSvg} alt="Heart" className="result-heart-img" />
+                <img
+                  src={heartSvg}
+                  alt={t("common.heartAlt")}
+                  className="result-heart-img"
+                />
                 <span className="result-percent-number">{percent}%</span>
               </div>
             </div>
@@ -135,7 +129,7 @@ const Result = () => {
 
         <div className="result-actions">
           <button type="button" onClick={handleBack}>
-            Назад
+            {t("common.back")}
           </button>
         </div>
       </div>

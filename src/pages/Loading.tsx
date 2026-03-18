@@ -6,10 +6,12 @@ import type { Engine } from '@tsparticles/engine'
 import { useCallback } from 'react'
 import { loadFull } from 'tsparticles'
 import Cupid from '../components/Cupid'
+import { useI18n } from '../i18n/i18n'
 
 const Loading = () => {
   const location = useLocation()
   const navigate = useNavigate()
+  const { t } = useI18n()
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -73,8 +75,8 @@ const Loading = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <h1>Calculating love...</h1>
-          <p>Купидон подсчитывает вашу совместимость, подожди пару секунд.</p>
+          <h1>{t("loading.title")}</h1>
+          <p>{t("loading.subtitle")}</p>
         </motion.div>
       </div>
     </main>

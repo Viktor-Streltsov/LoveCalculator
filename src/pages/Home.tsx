@@ -2,8 +2,11 @@ import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { FaHeart, FaBirthdayCake } from 'react-icons/fa'
 import Cupid from '../components/Cupid'
+import { useI18n } from '../i18n/i18n'
 
 const Home = () => {
+  const { t } = useI18n()
+
   return (
     <main className="page home-page">
       <motion.div
@@ -29,8 +32,8 @@ const Home = () => {
             <Cupid />
           </motion.div>
         </div>
-        <h1>Love Compatibility</h1>
-        <p>Романтические тесты совместимости — по именам и датам рождения.</p>
+        <h1>{t("home.title")}</h1>
+        <p>{t("home.description")}</p>
       </motion.div>
 
       <motion.nav
@@ -57,8 +60,8 @@ const Home = () => {
               <FaHeart />
             </span>
             <span className="home-card-text">
-              <strong>Тест по именам</strong>
-              <small>Узнай магию ваших имён</small>
+              <strong>{t("home.nameTestTitle")}</strong>
+              <small>{t("home.nameTestSubtitle")}</small>
             </span>
           </Link>
         </motion.div>
@@ -74,8 +77,8 @@ const Home = () => {
               <FaBirthdayCake />
             </span>
             <span className="home-card-text">
-              <strong>Тест по датам рождения</strong>
-              <small>Судьба по вашим датам</small>
+              <strong>{t("home.dateTestTitle")}</strong>
+              <small>{t("home.dateTestSubtitle")}</small>
             </span>
           </Link>
         </motion.div>
@@ -88,8 +91,8 @@ const Home = () => {
         >
           <Link to="/about">
             <span className="home-card-text">
-              <strong>О приложении</strong>
-              <small>Как работает совместимость и купидон</small>
+              <strong>{t("home.aboutTitle")}</strong>
+              <small>{t("home.aboutSubtitle")}</small>
             </span>
           </Link>
         </motion.div>

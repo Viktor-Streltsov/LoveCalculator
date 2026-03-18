@@ -1,12 +1,15 @@
+import { useI18n } from '../i18n/i18n'
+
 const About = () => {
+  const { t } = useI18n()
+
   return (
     <main className="page about-page">
-      <h1>О приложении</h1>
+      <h1>{t("about.title")}</h1>
       <p>
-        Love Compatibility — это лёгкое и игровое приложение для проверки
-        совместимости влюблённых пар.
+        {t("about.p1")}
       </p>
-      <p>Здесь будут описаны использованные методы расчёта и дисклеймеры.</p>
+      <p>{t("about.p2")}</p>
     </main>
   )
 }

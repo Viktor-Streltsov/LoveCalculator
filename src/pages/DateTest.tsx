@@ -3,11 +3,13 @@ import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { FaBirthdayCake } from 'react-icons/fa'
 import { calcDateLovePercent } from '../utils/loveCalc'
+import { useI18n } from '../i18n/i18n'
 
 const DateTest = () => {
   const [firstDate, setFirstDate] = useState('')
   const [secondDate, setSecondDate] = useState('')
   const navigate = useNavigate()
+  const { t } = useI18n()
 
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault()
@@ -38,8 +40,8 @@ const DateTest = () => {
         >
           <FaBirthdayCake />
         </motion.div>
-        <h1>Тест по датам рождения</h1>
-        <p>Выбери даты рождения и смотри, что подскажет судьба.</p>
+        <h1>{t("dateTest.title")}</h1>
+        <p>{t("dateTest.subtitle")}</p>
       </motion.div>
 
       <motion.form
@@ -50,7 +52,7 @@ const DateTest = () => {
         transition={{ delay: 0.1, duration: 0.5 }}
       >
         <label>
-          Дата рождения тебя
+          {t("dateTest.yourBirthDateLabel")}
           <div className="date-input-wrapper">
             <input
               type="date"
@@ -62,7 +64,7 @@ const DateTest = () => {
         </label>
 
         <label>
-          Дата рождения партнера
+          {t("dateTest.partnerBirthDateLabel")}
           <div className="date-input-wrapper">
             <input
               type="date"
@@ -79,7 +81,7 @@ const DateTest = () => {
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.97 }}
         >
-          Проверить совместимость
+          {t("dateTest.submit")}
         </motion.button>
       </motion.form>
     </main>

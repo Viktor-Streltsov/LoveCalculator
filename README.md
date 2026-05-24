@@ -1,73 +1,85 @@
-# React + TypeScript + Vite
+# Love Calculator
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Романтическое веб-приложение для проверки совместимости пар — по именам и датам рождения. Поддерживает два языка (RU / EN) и может быть собрано как нативное Android-приложение через Capacitor.
 
-Currently, two official plugins are available:
+## Возможности
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **Тест по именам** — вычисляет процент совместимости на основе введённых имён
+- **Тест по датам рождения** — вычисляет совместимость по датам рождения партнёров
+- **Анимированный результат** — сообщение и процент совместимости с анимацией (Framer Motion)
+- **Двуязычный интерфейс** — переключение между русским и английским языком
+- **Плавные переходы** — анимация между страницами с поддержкой `prefers-reduced-motion`
+- **Android-сборка** — упаковка через Capacitor
 
-## React Compiler
+## Стек технологий
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+| Технология | Назначение |
+|---|---|
+| React 19 + TypeScript | UI и логика |
+| Vite 8 | Сборщик и dev-сервер |
+| React Router 7 | Навигация между страницами |
+| Framer Motion | Анимации и переходы |
+| tsParticles | Частицы на фоне |
+| react-day-picker | Выбор дат рождения |
+| Capacitor 8 | Android-сборка |
 
-## Expanding the ESLint configuration
+## Установка и запуск
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+```bash
+# Установить зависимости
+npm install
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+# Запустить dev-сервер
+npm run dev
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+# Сборка для production
+npm run build
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+# Предпросмотр production-сборки
+npm run preview
+
+# Проверка линтером
+npm run lint
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Android-сборка
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+```bash
+# Синхронизировать веб-сборку с Android-проектом
+npm run cap:sync
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+# Далее открыть android/ в Android Studio и запустить на устройстве или эмуляторе
 ```
+
+## Структура проекта
+
+```
+src/
+├── pages/
+│   ├── Intro.tsx       # Экран приветствия (показывается один раз)
+│   ├── Home.tsx        # Главная страница с выбором теста
+│   ├── NameTest.tsx    # Форма ввода имён
+│   ├── DateTest.tsx    # Форма выбора дат рождения
+│   ├── Loading.tsx     # Анимация загрузки
+│   ├── Result.tsx      # Страница результата
+│   └── About.tsx       # О приложении
+├── components/
+│   └── Cupid.tsx       # Анимированный персонаж купидона
+├── i18n/
+│   ├── dictionary.ts   # Переводы (RU / EN)
+│   └── i18n.tsx        # Провайдер и хук useI18n
+├── utils/
+│   └── loveCalc.ts     # Алгоритмы расчёта совместимости
+└── App.tsx             # Роутинг, шапка, подвал, переключатель языка
+```
+
+## Алгоритм расчёта
+
+Совместимость вычисляется детерминировано (одни и те же входные данные всегда дают один результат):
+
+- **По именам** — символьные коды обоих имён суммируются с весовыми коэффициентами, результат берётся по модулю 101.
+- **По датам** — аналогично, но на вход подаются строки дат в формате `YYYY-MM-DD`.
+
+Результат — число от 0 до 100, которое интерпретируется как «процент совместимости».
+
+> Приложение создано для развлечения. Результаты не имеют научного обоснования.

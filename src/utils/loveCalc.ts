@@ -36,34 +36,39 @@ export function calcDateLovePercent(firstDate: string, secondDate: string): numb
 
   if (!a || !b) return 0
 
-  // Спецусловие: одна дата — 23.02 (год не важен),
-  // вторая — любой день с 01.12 по 25.12 (год не важен) — всегда 100%
-  const getDayMonth = (value: string): { day: number; month: number } | null => {
+  // Спецусловие: одна дата — строго 23.02.1997 (год важен),
+  // вторая — любой день с 01.12 по 31.12 любого года (год не важен) — всегда 100%
+  const getDayMonthYear = (
+      value: string,
+  ): { day: number; month: number; year: number } | null => {
     // Формат из <input type="date"> — YYYY-MM-DD
     const isoMatch = value.match(/^(\d{4})-(\d{2})-(\d{2})$/)
     if (isoMatch) {
-      const [, , mm, dd] = isoMatch
-      return { day: Number(dd), month: Number(mm) }
+      const [, yyyy, mm, dd] = isoMatch
+      return { day: Number(dd), month: Number(mm), year: Number(yyyy) }
     }
     // Формат DD.MM.YYYY
     const dotMatch = value.match(/^(\d{2})\.(\d{2})\.(\d{4})$/)
     if (dotMatch) {
-      const [, dd, mm] = dotMatch
-      return { day: Number(dd), month: Number(mm) }
+      const [, dd, mm, yyyy] = dotMatch
+      return { day: Number(dd), month: Number(mm), year: Number(yyyy) }
     }
     return null
   }
 
-  const isFeb23 = (dm: { day: number; month: number } | null) =>
-      !!dm && dm.month === 2 && dm.day === 23
+  const isFeb23_1997 = (dm: { day: number; month: number; year: number } | null) =>
+      !!dm && dm.month === 2 && dm.day === 23 && dm.year === 1997
 
-  const isDecRange = (dm: { day: number; month: number } | null) =>
-      !!dm && dm.month === 12 && dm.day >= 1 && dm.day <= 25
+  const isDecRange = (dm: { day: number; month: number; year: number } | null) =>
+      !!dm && dm.month === 12 && dm.day >= 1 && dm.day <= 31
 
-  const aDm = getDayMonth(a)
-  const bDm = getDayMonth(b)
+  const aDm = getDayMonthYear(a)
+  const bDm = getDayMonthYear(b)
 
-  if ((isFeb23(aDm) && isDecRange(bDm)) || (isDecRange(aDm) && isFeb23(bDm))) {
+  if (
+      (isFeb23_1997(aDm) && isDecRange(bDm)) ||
+      (isDecRange(aDm) && isFeb23_1997(bDm))
+  ) {
     return 100
   }
 

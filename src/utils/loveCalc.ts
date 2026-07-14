@@ -36,22 +36,34 @@ export function calcDateLovePercent(firstDate: string, secondDate: string): numb
 
   if (!a || !b) return 0
 
-  // Спецусловие: 23.02.1997 + 22.02.1999 (в любом порядке, поддержка форматов YYYY-MM-DD и DD.MM.YYYY) — всегда 100%
-  const toDdMmYyyy = (value: string) => {
+  // Спецусловие: одна дата — 23.02 (год не важен),
+  // вторая — любой день с 01.12 по 25.12 (год не важен) — всегда 100%
+  const getDayMonth = (value: string): { day: number; month: number } | null => {
     // Формат из <input type="date"> — YYYY-MM-DD
     const isoMatch = value.match(/^(\d{4})-(\d{2})-(\d{2})$/)
     if (isoMatch) {
-      const [, yyyy, mm, dd] = isoMatch
-      return `${dd}.${mm}.${yyyy}`
+      const [, , mm, dd] = isoMatch
+      return { day: Number(dd), month: Number(mm) }
     }
-    return value
+    // Формат DD.MM.YYYY
+    const dotMatch = value.match(/^(\d{2})\.(\d{2})\.(\d{4})$/)
+    if (dotMatch) {
+      const [, dd, mm] = dotMatch
+      return { day: Number(dd), month: Number(mm) }
+    }
+    return null
   }
 
-  const specialDates = ['23.02.1997', '22.02.1999']
-  const aNorm = toDdMmYyyy(a)
-  const bNorm = toDdMmYyyy(b)
+  const isFeb23 = (dm: { day: number; month: number } | null) =>
+      !!dm && dm.month === 2 && dm.day === 23
 
-  if (specialDates.includes(aNorm) && specialDates.includes(bNorm) && aNorm !== bNorm) {
+  const isDecRange = (dm: { day: number; month: number } | null) =>
+      !!dm && dm.month === 12 && dm.day >= 1 && dm.day <= 25
+
+  const aDm = getDayMonth(a)
+  const bDm = getDayMonth(b)
+
+  if ((isFeb23(aDm) && isDecRange(bDm)) || (isDecRange(aDm) && isFeb23(bDm))) {
     return 100
   }
 
